@@ -1,6 +1,6 @@
 # Contributing
 
-## How to host a website using MDWiki, Google Drive and DriveToWeb
+## How this website was created?
 
 This webpage is created with [MDWiki](http://dynalon.github.io/mdwiki/#!index.md). The file can be found "locally" on [Google Drive](https://drive.google.com/open?id=1MGgytFVDFtaLxjRYaMF_9mCRfOU406gc) and on Jani's computer.
 
