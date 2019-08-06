@@ -109,6 +109,7 @@ First, start a new screen (again safer in case the connection breaks) and in the
 
 Use the command ```rstudio``` to open Rstudio. It is better to start the screen and use R in a node (not to use the main node). Rstudio is not installed when using a node (located normally in /usr/bin), so Rstudio can currently be used only in the main node (where computationally intensive work should not be done).
 
+![Interactive use](interactiveRstudio.gif)
 
 ## Troubleshooting
 
