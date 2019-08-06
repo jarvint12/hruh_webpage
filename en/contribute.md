@@ -2,7 +2,7 @@
 
 ## How to host a website using MDWiki, Google Drive and DriveToWeb
 
-This webpage is created with [MDWiki](http://dynalon.github.io/mdwiki/#!index.md), [Google Drive](https://drive.google.com/open?id=1GS1hFvEuJPP3EaYjt--6MBv4rv93AbWu) and [DriveToWeb](https://drv.tw/).
+This webpage is created with [MDWiki](http://dynalon.github.io/mdwiki/#!index.md). The file can be found "locally" on [Google Drive](https://drive.google.com/open?id=1MGgytFVDFtaLxjRYaMF_9mCRfOU406gc) and on Jani's computer.
 
 Basically this webpage is just a collection of [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) documents, which are held in the Google Drive -folder and hoster with DriveToWeb-application through the mdwiki.html -file (javascript). 
 
@@ -25,11 +25,10 @@ To add subsections to this website,
 
 The file should be updated it automagically after the file is in the folder, force refresh (Cmd+R) could give it the final push if needed.
 
-[gimmick:ForkMeOnGitHub](https://github.com/janihuuh/hruh_bioinformatics)
+[gimmick:ForkMeOnGitHub](https://github.com/janihuuh/hruh_webpage)
 
 ## Contact
 
-jani.huuhtanen@helsinki.fi or leave comment 
-[gimmick:Disqus](janihuuhtanen)
+jani.huuhtanen@helsinki.fi 
 
 
