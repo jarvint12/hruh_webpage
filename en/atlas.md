@@ -77,17 +77,37 @@ screens.
 
 ```bash
 screen -S nameofscreen #(create new screen)
-
 screen -r nameofscreen #(enter screen)
-
 ctrl + a + d # (exit screen)
-
 screen –list # (list open screens)
-
 screen -X -S nameofscreen kill # (kill screen session)
 ```
 To run a command in the background (enabling you to run other commands while one is running), add & to the end of the command.
 Screens are usually used to run commands one needs to monitor, whereas ”automatic” ones can be run in the background.
+
+## Working interactively in a node
+
+If you want to work interactively without using the job queue, you can enter a node and work there without disturbing others in the main node.
+
+First, start a new screen and in the screen, enter a node using ssh. Using the screen is safer if the connection breaks, as then your interactive session will remain in the cluster.
+
+``` 
+ssh nameofnode 
+ssh compute-16 # an example
+
+```
+### Using R and Rstudio interactively
+
+To use R interactively and have plots you produce show up on your screen, install XQuartz on your computer and open SSH connection using:
+
+```
+ssh -Y username@atlas.fimm.fi
+
+``` 
+
+First, start a new screen (again safer in case the connection breaks) and in the screen, use R in the command line and the plots will appear on your screen. 
+
+Use the command ```rstudio``` to open Rstudio. It is better to start the screen and use R in a node (not to use the main node). Rstudio is not installed when using a node (located normally in /usr/bin), so Rstudio can currently be used only in the main node (where computationally intensive work should not be done).
 
 
 ## Troubleshooting

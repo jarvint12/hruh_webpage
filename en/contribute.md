@@ -4,9 +4,9 @@
 
 This webpage is created with [MDWiki](http://dynalon.github.io/mdwiki/#!index.md), [Google Drive](https://drive.google.com/open?id=1GS1hFvEuJPP3EaYjt--6MBv4rv93AbWu) and [DriveToWeb](https://drv.tw/).
 
-Basically this webpage is just a collection of [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) documents, which are held in the Google Drive -folder and hoster with DriveToWeb-application through the mdwiki.html -file. 
+Basically this webpage is just a collection of [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) documents, which are held in the Google Drive -folder and hoster with DriveToWeb-application through the mdwiki.html -file (javascript). 
 
-The Google Drive -folder and hence this webpage is open to public, but is not indexed by Google so in theory this page is hard to find.
+The Google Drive -folder and hence this webpage is open to public, but are not indexed by Google so in theory the Google Drive and this page is hard to find without a link but still vulnerable.
 
 ## How to edit instructions in this website
 

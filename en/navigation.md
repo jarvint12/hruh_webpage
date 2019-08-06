@@ -6,7 +6,9 @@
 
 * [Atlas basics](atlas.md)
 * [Submitting jobs](submit_job.md)
-* [Directory map](directory_map.md)
+* [Installing R-packages](r_packages.md)
+* [Installing Python-packages with conda](conda.md)
+* [Directory map and useful links](directory_map.md)
 
 [How to contribute to this project](contribute.md)
 
