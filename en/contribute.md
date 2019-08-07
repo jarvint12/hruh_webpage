@@ -1,6 +1,6 @@
 # Contributing
 
-## How this website was created?
+## How this website was created
 
 This webpage is created with [MDWiki](http://dynalon.github.io/mdwiki/#!index.md). The file can be found "locally" on [Google Drive](https://drive.google.com/open?id=1MGgytFVDFtaLxjRYaMF_9mCRfOU406gc) and on Jani's computer.
 
@@ -10,9 +10,9 @@ The Google Drive -folder and hence this webpage is open to public, but are not i
 
 ## How to edit instructions in this website
 
-Basically this webpage is just a collection of [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) documents, so you just need to edit the Markdown files. There are multiple ways of doing that, but the simplest is:
+Basically this webpage is just a collection of [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) documents, so *you just need to edit the Markdown files*. There are multiple ways of doing that, but the simplest is the GitHub way: 
 
-* the GitHub way: edit the .md files straight in [this repo](https://github.com/janihuuh/hruh_webpage).
+1) Edit the .md files straight in [this repo](https://github.com/janihuuh/hruh_webpage).
 
 Tips on markdown can be found e.g. [here](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet). A text editor is adviced, e.g. [Atom](https://atom.io/) or [MacDown](https://macdown.uranusjr.com/)
 
@@ -20,8 +20,8 @@ Tips on markdown can be found e.g. [here](https://github.com/adam-p/markdown-her
 
 To add subsections to this website,
 
-* Create a new file in the repo
-* Add it to navigation.md in the folder, like the previous documents have been. You can look for tips from [MDwiki website](http://dynalon.github.io/mdwiki/#!index.md).
+* Create a new file in [the repo](https://github.com/janihuuh/hruh_webpage).
+* Add a link to the navigation.md in the folder, like the previous documents have been. You can look for tips from [MDwiki website](http://dynalon.github.io/mdwiki/#!index.md).
 
 The file should be updated it automagically after the file is in the folder, force refresh (Cmd+R) could give it the final push if needed.
 
