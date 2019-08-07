@@ -1,7 +1,5 @@
 # HRUH Bioinformatics
 
-[How to git](git.md)
-
 [How to Atlas]()
 
 * [Atlas basics](atlas.md)
@@ -10,6 +8,9 @@
 * [Installing Python-packages with conda](conda.md)
 * [Directory map and useful links](directory_map.md)
 
-[How to contribute to this project](contribute.md)
+[How to git](git.md)
+
+[How to contribute](contribute.md)
 
 [gimmick:theme](bootstrap)
+[gimmick:ForkMeOnGitHub](https://github.com/janihuuh/hruh_webpage)
