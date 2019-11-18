@@ -35,8 +35,62 @@ grun.py -n xyz2 -q highmem.q -c "/projects/fimm_ngs_mustjoki/tcr/run2.sh"
 grun.py -n xyz3 -q highmem.q -c "/projects/fimm_ngs_mustjoki/tcr/run3.sh"
 grun.py -n xyz4 -q highmem.q -c "/projects/fimm_ngs_mustjoki/tcr/run4.sh"
 ```
+
 If you need more memory, use –q hugemem.q
 
+Update 11/2019: New flags for grun.py
+
+```bash
+
+-M, --memory [value]     Reserved memory. This value is in GB, max of 50
+
+                                      Defaults depend on queue, and is generally the old limits.
+
+-C, --cores [value]         Replaces the --slots flag as slots are now unbound from CPU-cores.
+
+                                      The amount of CPU-cores to reserve. Currently max of 4.
+
+                                      Defaults depend on queue.
+
+--dry-run                        Switch, creates the job-file but does not queue it to the cluster.
+
+                                      For debugging or manual editing of the job-files before submitting.
+
+-d, --debug                    Switch, prints debug information
+
+
+For those of you who use qsub you can request hardware via,
+
+-l h_rss=[memory]         In bytes, supports K M G as value multipliers (for example 4G)
+
+-l res_cores=[value]       Number of cores to reserve.
+
+
+The defaults per queue are as follows:
+
+Queue:               Default cores/memory/max memory
+all.q                    1Core/2GB/3GB
+
+medmem.q         2Cores/5GB/10GB
+
+highmem.q         3Cores/10GB/20GB
+
+hugemem.q        4Cores/20GB/45GB
+
+express.q            2Cores/2GB/2GB /Max 90minutes runtime.
+
+interactive.q        2Cores/16GB/16GB
+
+sisu.q                  1Core/7GB/NA
+
+sisu_impute.q     1Core/1.7GB/NA
+
+Queues not listed are for special use only and does not currently have any default limits.
+
+The long term goal is to move away from the queues and instead only use resource requests for jobs.
+This also ties into being able to run singularity containers in the cluster.
+Pure docker containers due to its security limitations are not currently planned.
+```
 
 #### 4. To check if the status of your job, use 
 
