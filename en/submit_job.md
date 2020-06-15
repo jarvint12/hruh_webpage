@@ -2,16 +2,28 @@
 
 Use the job queue for all longer running computations.
 
-#### 1. Create your script e.g.  
+Let us imagine that I wanted to run command ‘ls –lha’ to see all permissions to current directory. Usually, this command could of course be executed on a command line but let us now imagine that this command would be a longer running computation, thus needed to execute through job queue.
+
+#### 1. Create a shell script (.sh-ending file)  
 ```bash
 /projects/fimm_ngs_mustjoki/tcr/run.sh 
 ```
+You can go for example to directory /projects/fimm_ngs_mustjoki/tcr/ with command
+cd /projects/fimm_ngs_mustjoki/tcr/. After that, you can make a shell script named run.sh with command vim run.sh. Now there should be a file run.sh in directory /projects/fimm_ngs_mustjoki/tcr/. In reality, this could be any directory, and shell script could have any name as long as it ends with .sh.
+
 #### 2. Edit permissions to your script to be able to run it
+At least I can skip this part -Timo
 ```bash
 chmod +x run.sh 
 ```
-#### 3. Submit job to queue
 
+#### 3. Write commands to shell script.
+We want to execute command ```ls –lha``` so let us write it to our file.
+
+#### 4. Submit job to queue
+This can be done 3 ways
+
+##### 4.1 Submit job with grun.py
 ```bash
 grun.py -n xyz -q highmem.q -c "/projects/fimm_ngs_mustjoki/tcr/run.sh"
 ```
@@ -20,12 +32,84 @@ grun.py -n xyz -q highmem.q -c "/projects/fimm_ngs_mustjoki/tcr/run.sh"
 * -c ”pathtoscript” = path to your script to be submitted to the queue
 * -q highmem.q = queue where the job is submitted
 
-After the run has started, three files will appear to the directory you started the run in: 
+##### 4.2 Submit job with qsub specifying commands in command line
+```bash
+qsub -N xyz -cwd -q all.q /projects/fimm_ngs_mustjoki/tcr/run.sh
+```
+
+* qsub = Command that submits your job to queue
+* N xyz = xyz is a prefix for error and stdout files and the name for the run in the queue
+* cwd = Current working directory, without this submitted command (ls -lha) will be executed in your home directory, and all reports are also created there. Now everything happens in directory you are currently in.
+* q all.q = queue where the job is submitted. Different queues are listed later.
+* /projects/fimm_ngs_mustjoki/tcr/run.sh = path to your script. If the script is located in the current directory, you can only type the file name. This should be the last argument.
+
+##### 4.3 Submit job with qsub specifying commands in shell script
+```bash
+qsub run.sh
+```
+You can write all commands like -N xyz and -q all.q to your run.sh. This makes it more clear for at least me. Write commands to different lines, starting lines with #$. If you want to specify for instance queue in your file, you can write #$ -q all.q in the beginning of that file. Then you can submit your job by typing qsub run.sh to command line. Example run.sh file below.
+
+```bash
+#$ -N making_bed_file
+#$ -q all.q
+#$ -cwd
+#$ -e /projects/fimm_ngs_mustjoki/tcr/error_file.txt
+#$ -o /projects/fimm_ngs_mustjoki/tcr/stdout_file.txt
+
+ls -lha
+```
+-e and -o arguments are optional and specify STDOUT and error reports. More about them in the next section.
+
+#### 5. Files created after submitting files
+
+##### 5.1 Files created after grun.py
+If you used grun.py, after the run has started, three files will appear to the directory you started the run in: 
 
 * xyz.OU 	STDOUT of the program you are running, if not directed to other file by the program
 * xyz.ER	error report of the program you are running, if not directed to other file by the program
 * xyz.job		run start command
-		
+
+
+##### 5.2 Files created after qsub
+If you submitted jobs using qsub, when the run has started, two files will appear to the directory you started the run in:
+
+1. STDOUT file of the program you are running (everything command line would usually print). If you have not specified it, file name is something like xyz.o6213656, where numbers vary. Result of ls -lha should be found inside this file.
+
+2. Error report of the program you are running. For example, if you have typed a no existing command, error text is found inside this file. If you have not specified error file name, it is something like xyz.e6213656, where numbers vary.
+
+You can specify names of STDOUT and error files with -e and -o commands, as seen in the example file above.
+
+#### 6. Monitoring your job
+
+##### 6.1 Job status with
+```bash
+qstat
+```
+
+In qstat output:
+
+	job-ID 	= ID of your job, can be used to terminate the job
+	prior	= 0.5 for all
+	name	= the job name you specified, xyz in example
+	user	= you
+state	= r (running), Eqw (error, job will not start), q (queued), qw (job in queue waiting to be scheduled)
+
+##### 6.2 Job memory usage
+To find the memory usage of your job run, use
+```bash
+qstat -j <job-id> | grep maxvmem
+```
+
+#### 7. Deleting your job
+
+If you made a mistake and want to terminate the process
+
+```bash
+qdel JOBID
+```
+E.g. qdel 1205638
+
+#### 8. Running multiple jobs
 
 If you need to run several jobs, e.g. same script for 4 different datasets, create 4 scripts and start them separately. If your task takes long, it is useful to break it into multiple parts (if possible) to be run in parallel so that it will finish sooner.
 
@@ -36,6 +120,7 @@ grun.py -n xyz3 -q highmem.q -c "/projects/fimm_ngs_mustjoki/tcr/run3.sh"
 grun.py -n xyz4 -q highmem.q -c "/projects/fimm_ngs_mustjoki/tcr/run4.sh"
 ```
 
+#### 9. Different queues and memory usage
 If you need more memory, use –q hugemem.q
 
 Update 11/2019: New flags for grun.py
@@ -92,26 +177,8 @@ This also ties into being able to run singularity containers in the cluster.
 Pure docker containers due to its security limitations are not currently planned.
 ```
 
-#### 4. To check if the status of your job, use 
-
-```bash
-qstat
-```
-In qstat output:
-
-* job-ID 	= ID of your job, can be used to terminate the job
-* prior	= 0.5 for all
-* name	= the job name you specified
-* user	= you
-* state	= r (running), Eqw (error, job will not start), q (queued)
- 
-6. If you made a mistake and want to terminate the process
-
-```bash
-qdel JOBID
-```
-E.g. qdel 1205638
-
+#### 10. More information and commands for qsub
+More information and commands for qsub can be found in http://bioinformatics.mdc-berlin.de/intro2UnixandSGE/sun_grid_engine_for_beginners/how_to_submit_a_job_using_qsub.html.
 
 ## Running R scripts in job queue
 
