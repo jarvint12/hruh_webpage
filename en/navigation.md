@@ -8,6 +8,7 @@
 * [Typical file storages](file_storages.md)
 * [Installing R-packages](rpackages.md)
 * [Installing Python-packages with conda](conda.md)
+* [HRUH_clusters and installing packages](HRUH_clusters.md)
 * [Directory map and useful links](directory_map.md)
 
 [How to git](git.md)
