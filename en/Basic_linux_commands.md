@@ -6,29 +6,41 @@ find [where to start searching from] [expression determines what to find] [-opti
 ```
 * [expression determines what to find] can be file, folder, name, creation day, modification day owner or permissions.
 
-for example, to find xyz.ER from current directory or its subdirectories, one could run 
-```find . -name xyz.ER```
+For example, to find xyz.ER from current directory or its subdirectories, one could run 
+```bash
+find . -name xyz.ER
+```
 * . = current directory
 * -name = find names (directories or files)
 * xyz.ER = file we are searching
 
 If one wants to find all text files in subdirectory 'annotations' of the current directory, one could write
-```find ./annotations -name *.txt```
+```bash
+find ./annotations -name *.txt
+```
 
 Empty files in annotations directory can be found with command
-```find ./annotations -empty```
+```bash
+find ./annotations -empty
+```
 
 Find all python files from current directory and its subdirectories by user tijarvin
-```find -user tijarvin -name "*.py"```
+```bash
+find -user tijarvin -name "*.py"
+```
 
 Find all files modified in the last 24 hours
 
-```find -mtime -1```
+```bash
+find -mtime -1
+```
 * -mtime = Search by modification date
 * -1 = Changed 1 day or less ago (+1 = 1 day or more ago)
 
 Exec command can be used with find to execude commands on found files. 
-```find ./annotations -name *.txt -exec rm -i {} \;```
+```bash
+find ./annotations -name *.txt -exec rm -i {} \;
+```
 * rm = remove file
 * -i = Interactive delete, user confirms every delete with Y/y
 * {} = pass every found file as an argument to exec command rm
@@ -36,7 +48,9 @@ Exec command can be used with find to execude commands on found files.
 * ; = End exec command
 
 And if you want to find texts with certain patterns from all text files, you can use for example
-```find ./ -type f -name "*.txt" -exec grep 'chr1' {} \;```
+```bash
+find ./ -type f -name "*.txt" -exec grep 'chr1' {} \;
+```
 * ./ = current directory and its subdirectories
 * -type f = Search only files
 * grep 'chr1' = find and print lines that contain 'chr1' in found files
@@ -47,7 +61,9 @@ Most examples are from website https://www.geeksforgeeks.org/find-command-in-lin
 ## List files and directories with ls command
 
 If you want to list all files and directories in current directory, write
-```ls```
+```bash
+ls
+```
 
 You can specify listing with commands
 * ```ls -F``` = Add character / to the end of each listed directory
@@ -58,13 +74,20 @@ You can specify listing with commands
 * ```ls --help``` = More listing options
 
 If you want to list files in current directory one file below another with long listing information
-````ls -l```
+```bash
+ls -l
+```
 
 In the result there could be for example
-```drwxrws---  2 mkankain sg_mustjoki    8192 Mar  4 22:39 annovar_all
-drwxrws---  2 mkankain sg_mustjoki   28672 Mar 29 13:33 annovar_org```
+```bash
+drwxrws---  2 mkankain sg_mustjoki    8192 Mar  4 22:39 annovar_all
+drwxrws---  2 mkankain sg_mustjoki   28672 Mar 29 13:33 annovar_org
+```
 
-* First column (drwxrws---) is file type and permissions. For example in drwxrws--- first letter d indicates directory. - would be a file, s would be socket file and l would be a link. First 3 letters after d are user (your) permissions, next three are group(sg_mustjoki) permissions, last 3 are global (all cluster users) permissions. r = read w = write x/s = execute - = No permissions.
+* First column (drwxrws---) is file type and permissions. For example in drwxrws--- first letter d indicates directory.
+- would be a file, s would be socket file and l would be a link. First 3 letters after d are user (your) permissions,
+next three are group (sg_mustjoki) permissions, last 3 are global (all cluster users) permissions. r = read, w = write,
+x/s = execute, - = No permissions.
 * Next column (2) is number of links for that file or directory.
 * Third column (mkankain) is the owner of that file or directory
 * Fourth column (sg_mustjoki) is the group
@@ -73,7 +96,9 @@ drwxrws---  2 mkankain sg_mustjoki   28672 Mar 29 13:33 annovar_org```
 * Last column (annovar_all) is the name of that file
 
 ## Check disk space with
-```df```
+```bash
+df
+```
 
 Again, options can be added
 * -a = Display all file system disk space usage
@@ -85,7 +110,9 @@ Again, options can be added
 
 
 ## Check memory usage of files, directories and subdirectories with
-```du```
+```bash
+du
+```
 Again, options can be added
 * -sh = Summary of total disk usage of an directory
 * -a = Display all file system disk space usage
@@ -98,16 +125,22 @@ Again, options can be added
 * --help = All available options
 
 ## Print only output lines containing certain patterns with
-```grep```
+```bash
+grep
+```
 You can pipe commands to grep if you want to pick only certain lines from output. If you want to list for example all files and directories you have permission to read, you can write
-```ls -l | grep '^.r' ```
+```bash
+ls -l | grep '^.r'
+```
 * | = Give output as an argument to next command
 * ^ = In the beginning of line
 * . = Any character (We don't care if it's - (file), d (directory) or l (link)
 * r = character r (permission to read)
 
 Or if you want all edited in May
-^^^ls -l | grep '\sMar\s'
+```bash
+ls -l | grep '\sMar\s'
+```
 * \s = space
 
 grep can be used with any output.
