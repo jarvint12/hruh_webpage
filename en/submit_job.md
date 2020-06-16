@@ -24,17 +24,19 @@ We want to execute command ```ls –lha``` so let us write it to our file.
 This can be done 3 ways
 
 ##### 4.1 Submit job with grun.py
+If you submit job with grun.py and have not created .forward file, you must first go to home directory with ```cd ~```. Then create a file named .forward with for example ```vim .forward```. Write Y to your file and save. You can find that file with ```ls -a``` from the directory. Now you are ready to submit your job with
+
 ```bash
 grun.py -n xyz -q highmem.q -c "/projects/fimm_ngs_mustjoki/tcr/run.sh"
 ```
 
 * -n xyz = xyz is a prefix for error and stdout files and the name for the run in the queue
-* -c ”pathtoscript” = path to your script to be submitted to the queue
+* -c ”pathtoscript” = path to your script to be submitted to the queue. You can also give command straight, like '-c ls'
 * -q highmem.q = queue where the job is submitted
 
 ##### 4.2 Submit job with qsub specifying commands in command line
 ```bash
-qsub -N xyz -cwd -q all.q /projects/fimm_ngs_mustjoki/tcr/run.sh
+qsub -N xyz -cwd -q highmem.q /projects/fimm_ngs_mustjoki/tcr/run.sh
 ```
 
 * qsub = Command that submits your job to queue
@@ -51,7 +53,7 @@ You can write all commands like -N xyz and -q all.q to your run.sh. This makes i
 
 ```bash
 #$ -N making_bed_file
-#$ -q all.q
+#$ -q highmem.q
 #$ -cwd
 #$ -e /projects/fimm_ngs_mustjoki/tcr/error_file.txt
 #$ -o /projects/fimm_ngs_mustjoki/tcr/stdout_file.txt
@@ -123,9 +125,52 @@ grun.py -n xyz4 -q highmem.q -c "/projects/fimm_ngs_mustjoki/tcr/run4.sh"
 #### 9. Different queues and memory usage
 If you need more memory, use –q hugemem.q
 
-Update 11/2019: New flags for grun.py
+```bash
+
+The defaults per queue are as follows:
+
+Queue:               Default cores/memory/max memory
+all.q                    1Core/2GB/3GB
+
+medmem.q         2Cores/5GB/10GB
+
+highmem.q         3Cores/10GB/20GB
+
+hugemem.q        4Cores/20GB/45GB
+
+express.q            2Cores/2GB/2GB /Max 90minutes runtime.
+
+interactive.q        2Cores/16GB/16GB
+
+sisu.q                  1Core/7GB/NA
+
+sisu_impute.q     1Core/1.7GB/NA
+```
+Queues not listed are for special use only and does not currently have any default limits.
+
+The long term goal is to move away from the queues and instead only use resource requests for jobs.
+This also ties into being able to run singularity containers in the cluster.
+Pure docker containers due to its security limitations are not currently planned.
+
+**Notice** inside nodes processes are not monitored. If you for example choose a node, which has a memory of 100GB, and give it 4 runs which each take 75GB memory, nothing good will happen. So runs on slots cannot exceed nodes' limitations, which can be seen above.
+
+#### 10. Update 06/2020: New flags for grun.py
 
 ```bash
+-l, --list		Lists queues
+
+-N, --nodes [value]	Specify nodes (physical computing units with limited vCPU and memory) for run
+
+-m, --mail [value]	Sends email
+
+-L, --log-dir [value]	If you want to specify location where log files are created
+
+-s, --sync [value]	If you want to wait for the job to return from cluster (which may take a long while), you
+  				use -s yes option for that.
+				
+-S, --slots [value]		How many slots are reserved for your job in node, thus, giving you more memory in CPU. In other words, 					how many runs you want to run simultaneously. If node has 4 slots and 1 is already in use, you cannot 					receive 4 slots.
+
+-R, --resources [value [value ...]]	???
 
 -M, --memory [value]     Reserved memory. This value is in GB, max of 50
 
@@ -150,34 +195,9 @@ For those of you who use qsub you can request hardware via,
 
 -l res_cores=[value]       Number of cores to reserve.
 
-
-The defaults per queue are as follows:
-
-Queue:               Default cores/memory/max memory
-all.q                    1Core/2GB/3GB
-
-medmem.q         2Cores/5GB/10GB
-
-highmem.q         3Cores/10GB/20GB
-
-hugemem.q        4Cores/20GB/45GB
-
-express.q            2Cores/2GB/2GB /Max 90minutes runtime.
-
-interactive.q        2Cores/16GB/16GB
-
-sisu.q                  1Core/7GB/NA
-
-sisu_impute.q     1Core/1.7GB/NA
-
-Queues not listed are for special use only and does not currently have any default limits.
-
-The long term goal is to move away from the queues and instead only use resource requests for jobs.
-This also ties into being able to run singularity containers in the cluster.
-Pure docker containers due to its security limitations are not currently planned.
 ```
 
-#### 10. More information and commands for qsub
+#### 11. More information and commands for qsub
 More information and commands for qsub can be found in http://bioinformatics.mdc-berlin.de/intro2UnixandSGE/sun_grid_engine_for_beginners/how_to_submit_a_job_using_qsub.html.
 
 ## Running R scripts in job queue
