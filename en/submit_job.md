@@ -4,6 +4,7 @@ Use the job queue for all longer running computations.
 
 Let us imagine that I wanted to run command ‘ls –lha’ to see all permissions to current directory. Usually, this command could of course be executed on a command line but let us now imagine that this command would be a longer running computation, thus needed to execute through job queue.
 
+
 #### 1. Create a shell script (.sh-ending file)  
 ```bash
 /projects/fimm_ngs_mustjoki/tcr/run.sh 
@@ -11,32 +12,35 @@ Let us imagine that I wanted to run command ‘ls –lha’ to see all permissio
 You can go for example to directory /projects/fimm_ngs_mustjoki/tcr/ with command
 cd /projects/fimm_ngs_mustjoki/tcr/. After that, you can make a shell script named run.sh with command vim run.sh. Now there should be a file run.sh in directory /projects/fimm_ngs_mustjoki/tcr/. In reality, this could be any directory, and shell script could have any name as long as it ends with .sh.
 
+
 #### 2. Edit permissions to your script to be able to run it
 At least I can skip this part -Timo
 ```bash
 chmod +x run.sh 
 ```
 
+
 #### 3. Write commands to shell script.
 We want to execute command ```ls –lha``` so let us write it to our file.
+
 
 #### 4. Submit job to queue
 This can be done 3 ways
 
-##### 4.1 Submit job with grun.py
-If you submit job with grun.py and have not created .forward file, you must first go to home directory with ```cd ~```. Then create a file named .forward with for example ```vim .forward```. Write Y to your file and save. You can find that file with ```ls -a``` from the directory. Now you are ready to submit your job with
 
+##### 4.1 Submit job with grun.py
 ```bash
 grun.py -n xyz -q highmem.q -c "/projects/fimm_ngs_mustjoki/tcr/run.sh"
 ```
 
 * -n xyz = xyz is a prefix for error and stdout files and the name for the run in the queue
-* -c ”pathtoscript” = path to your script to be submitted to the queue. You can also give command straight, like '-c ls'
+* -c ”pathtoscript” = path to your script to be submitted to the queue
 * -q highmem.q = queue where the job is submitted
+
 
 ##### 4.2 Submit job with qsub specifying commands in command line
 ```bash
-qsub -N xyz -cwd -q highmem.q /projects/fimm_ngs_mustjoki/tcr/run.sh
+qsub -N xyz -cwd -q all.q /projects/fimm_ngs_mustjoki/tcr/run.sh
 ```
 
 * qsub = Command that submits your job to queue
@@ -45,6 +49,7 @@ qsub -N xyz -cwd -q highmem.q /projects/fimm_ngs_mustjoki/tcr/run.sh
 * q all.q = queue where the job is submitted. Different queues are listed later.
 * /projects/fimm_ngs_mustjoki/tcr/run.sh = path to your script. If the script is located in the current directory, you can only type the file name. This should be the last argument.
 
+
 ##### 4.3 Submit job with qsub specifying commands in shell script
 ```bash
 qsub run.sh
@@ -52,8 +57,8 @@ qsub run.sh
 You can write all commands like -N xyz and -q all.q to your run.sh. This makes it more clear for at least me. Write commands to different lines, starting lines with #$. If you want to specify for instance queue in your file, you can write #$ -q all.q in the beginning of that file. Then you can submit your job by typing qsub run.sh to command line. Example run.sh file below.
 
 ```bash
-#$ -N making_bed_file
-#$ -q highmem.q
+#$ -N xyz
+#$ -q all.q
 #$ -cwd
 #$ -e /projects/fimm_ngs_mustjoki/tcr/error_file.txt
 #$ -o /projects/fimm_ngs_mustjoki/tcr/stdout_file.txt
@@ -62,7 +67,9 @@ ls -lha
 ```
 -e and -o arguments are optional and specify STDOUT and error reports. More about them in the next section.
 
+
 #### 5. Files created after submitting files
+
 
 ##### 5.1 Files created after grun.py
 If you used grun.py, after the run has started, three files will appear to the directory you started the run in: 
@@ -81,7 +88,9 @@ If you submitted jobs using qsub, when the run has started, two files will appea
 
 You can specify names of STDOUT and error files with -e and -o commands, as seen in the example file above.
 
+
 #### 6. Monitoring your job
+
 
 ##### 6.1 Job status with
 ```bash
@@ -96,11 +105,13 @@ In qstat output:
 	user	= you
 state	= r (running), Eqw (error, job will not start), q (queued), qw (job in queue waiting to be scheduled)
 
+
 ##### 6.2 Job memory usage
 To find the memory usage of your job run, use
 ```bash
 qstat -j <job-id> | grep maxvmem
 ```
+
 
 #### 7. Deleting your job
 
@@ -110,6 +121,7 @@ If you made a mistake and want to terminate the process
 qdel JOBID
 ```
 E.g. qdel 1205638
+
 
 #### 8. Running multiple jobs
 
@@ -125,52 +137,9 @@ grun.py -n xyz4 -q highmem.q -c "/projects/fimm_ngs_mustjoki/tcr/run4.sh"
 #### 9. Different queues and memory usage
 If you need more memory, use –q hugemem.q
 
-```bash
-
-The defaults per queue are as follows:
-
-Queue:               Default cores/memory/max memory
-all.q                    1Core/2GB/3GB
-
-medmem.q         2Cores/5GB/10GB
-
-highmem.q         3Cores/10GB/20GB
-
-hugemem.q        4Cores/20GB/45GB
-
-express.q            2Cores/2GB/2GB /Max 90minutes runtime.
-
-interactive.q        2Cores/16GB/16GB
-
-sisu.q                  1Core/7GB/NA
-
-sisu_impute.q     1Core/1.7GB/NA
-```
-Queues not listed are for special use only and does not currently have any default limits.
-
-The long term goal is to move away from the queues and instead only use resource requests for jobs.
-This also ties into being able to run singularity containers in the cluster.
-Pure docker containers due to its security limitations are not currently planned.
-
-**Notice** inside nodes processes are not monitored. If you for example choose a node, which has a memory of 100GB, and give it 4 runs which each take 75GB memory, nothing good will happen. So runs on slots cannot exceed nodes' limitations, which can be seen above.
-
-#### 10. Update 06/2020: New flags for grun.py
+Update 11/2019: New flags for grun.py
 
 ```bash
--l, --list		Lists queues
-
--N, --nodes [value]	Specify nodes (physical computing units with limited vCPU and memory) for run
-
--m, --mail [value]	Sends email
-
--L, --log-dir [value]	If you want to specify location where log files are created
-
--s, --sync [value]	If you want to wait for the job to return from cluster (which may take a long while), you
-  				use -s yes option for that.
-				
--S, --slots [value]		How many slots are reserved for your job in node, thus, giving you more memory in CPU. In other words, 					how many runs you want to run simultaneously. If node has 4 slots and 1 is already in use, you cannot 					receive 4 slots.
-
--R, --resources [value [value ...]]	???
 
 -M, --memory [value]     Reserved memory. This value is in GB, max of 50
 
@@ -195,9 +164,35 @@ For those of you who use qsub you can request hardware via,
 
 -l res_cores=[value]       Number of cores to reserve.
 
+
+The defaults per queue are as follows:
+
+Queue:               Default cores/memory/max memory
+all.q                    1Core/2GB/3GB
+
+medmem.q         2Cores/5GB/10GB
+
+highmem.q         3Cores/10GB/20GB
+
+hugemem.q        4Cores/20GB/45GB
+
+express.q            2Cores/2GB/2GB /Max 90minutes runtime.
+
+interactive.q        2Cores/16GB/16GB
+
+sisu.q                  1Core/7GB/NA
+
+sisu_impute.q     1Core/1.7GB/NA
+
+Queues not listed are for special use only and does not currently have any default limits.
+
+The long term goal is to move away from the queues and instead only use resource requests for jobs.
+This also ties into being able to run singularity containers in the cluster.
+Pure docker containers due to its security limitations are not currently planned.
 ```
 
-#### 11. More information and commands for qsub
+
+#### 10. More information and commands for qsub
 More information and commands for qsub can be found in http://bioinformatics.mdc-berlin.de/intro2UnixandSGE/sun_grid_engine_for_beginners/how_to_submit_a_job_using_qsub.html.
 
 ## Running R scripts in job queue
@@ -241,4 +236,3 @@ To use the installed packages, specify the path when loading library:
 ```R
 library(DNAcopy, lib.loc =  package_library)
 ```
-
