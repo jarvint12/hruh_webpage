@@ -236,4 +236,3 @@ To use the installed packages, specify the path when loading library:
 ```R
 library(DNAcopy, lib.loc =  package_library)
 ```
-
