@@ -3,7 +3,7 @@
 [How to Atlas]()
 
 * [Atlas basics](atlas.md)
-* [Basic Linux commands](file_storages.md)
+* [Basic Linux commands](Basic_linux_commands.md)
 * [Submitting jobs](submit_job.md)
 * [Typical file storages](file_storages.md)
 * [Installing R-packages](rpackages.md)
