@@ -45,35 +45,31 @@ Under the keywords, click "View 149 cases in Exploration". There you can Save Ca
 ### 2.4 Filter sets in Analysis
 Now you can go to "Analysis" tab and click "Select" in "Set Operations". Choose your two sets, "hemato_WXS" and "hemato_RNA", and click "Run". Now you can click the area where two sets overlap and click "Items saved" number on that row, which shows items in exploration. Again, you can save Case set.
 
-## 3. View set in Repository and download Manifest and TSV files
-Now you can view files of the set in Repository. From the left, choose bam-files and download Manifest file. This is a text file that contains all the necessary information about downloading. You should also download TSV files. From down of the page, choose "show 100 entries", and then, from every page download TSV.
+## 3. View set in Repository, choose bam files and add all files to cart 
+First, make sure your cart (upper right corner) is empty. Now you can view files of the set in Repository. From the left, choose bam-file. Add all files to cart.
 
-## 4. Upload manifest and TSV files to the cluster.
+## 4. Go to your cart, download Metadata and Manifest text files
 
-## 5. Upload token_file.txt
-From top right corner, click your username and Download token. Upload it to the cluster.
+## 5. Upload manifest and metadata files to the cluster.
 
-## 6. Download TCGA-data
+## 6. Upload token_file.txt
+From top right corner, click your username and Download token if you already have not. Upload it to the cluster.
+
+## 7. Run manifest_editing.py in cluster
+Program needs manifest and metadata files as arguments. It creates new_manifest.txt and important_info_of_metadata_files.txt. If you download TCGA-data with original manifest file, you will get a lot of useless files, because one patient may contain multiple WXS Tumor and WXS solid normal files. Program chooses the newest ones. It also makes sure that all the downloaded samples have RNA-seq and WXS tumor files from the same sample, as well as solid tissue normal file.
+
+## 8. Download TCGA-data
 ```bash
-/bioinformatics/tcga/gdc-client/gdc-client download -m path/to/manifestfile.txt -t path/to/token_file.txt -d path/to/wanted_directory
+/bioinformatics/tcga/gdc-client/gdc-client download -m path/to/new_manifest.txt -t path/to/token_file.txt -d path/to/wanted_directory
 ```
-* -m path/to/manifestfile.txt = Path to the downloaded manifest file
+* -m path/to/new_manifest.txt = Path to the manifest file created by manifest_editing.py
 * -t path/to/token_file.txt = Path to the downloaded token file
 * -d path/to/wanted_directory = Path to directory you want files to be downloaded. Default is current directory
 
 More optional commands can be found [here](https://docs.gdc.cancer.gov/Data_Transfer_Tool/PDF/Data_Transfer_Tool_UG.pdf) from page 16. 
 
-## 7. Run gdc_filtering_tool.py
-Now there should be directory for every file, containing bam, bai and log files. There could be multiple WXS tumor files, and we are only interested in the most recent one. We can filter wanted files with command
-```bash
-/bioinformatics/data/tcga/gdc_filtering_tool.py -r "path_to_repository_file1 path_to_repository_file2 path_to_repository_file3 path_to_repository_file4" -s path/to/source_directory -d /path/to/destination_directory
-```
-* -r "path_to_repository_file1 path_to_repository_file2 path_to_repository_file3 path_to_repository_file4" = Paths to all your repository files
-* -s path/to/source_directory = Path to directory where you downloaded all TCGA files. Default is current directory.
-* -d /path/to/destination_directory = Path to directory where you want all importan files. Default is current directory.
-
 ## 8. Aftermath
-Now you should have all the important files in the given destination directory. There should also be a text file containing information of all bam-files sorted by patient number. And there should be a text file containing information about moved files.
+Now you should have all the important files in the given destination directory (or current directory). Every file has its own directory containing the bam file, bai file and log files.
 
 
 
