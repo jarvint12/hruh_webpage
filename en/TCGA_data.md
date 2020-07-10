@@ -33,7 +33,7 @@ In this example we are interested in hematopoietic and reticuloendothelial syste
 In this case, we choose that primary site is hematopoietic and reticuloendothelial systems, program is TCGA, and experimental strategy is WXS. Then next to the keywords, we click "Open Query in Repository".
 
 ### 2.2 In Repository
-Now, from the left, we choose Data format=bam. But we still want to specify, that we are only interested in solid tissue normal and Primary Blood Derived Cancer - Peripheral Blood samples. So next to the keywords we click "advanced search". There you can see examples how other search words have been written. We can write "and sample_type" and website proposes "sample.sample_type". Now we have written "and cases.samples.sample_type". Then add " in \[" and website proposes different sample types. Let us choose our sample types differentiated with comma. Now we have written " and cases.samples.sample_type in \["primary blood derived cancer - peripheral blood", "solid tissue normal"\]". Whole keyword should be
+We still want to specify, that we are only interested in solid tissue normal and Primary Blood Derived Cancer - Peripheral Blood samples. So next to the keywords we click "advanced search". There you can see examples how other search words have been written. We can write "and sample_type" and website proposes "sample.sample_type". Now we have written "and cases.samples.sample_type". Then add " in \[" and website proposes different sample types. Let us choose our sample types differentiated with comma. Now we have written " and cases.samples.sample_type in \["primary blood derived cancer - peripheral blood", "solid tissue normal"\]". Whole keyword should be
 ```bash
 cases.primary_site in ["hematopoietic and reticuloendothelial systems"] and cases.project.program.name in ["TCGA"] and files.data_format in ["bam"] and files.experimental_strategy in ["WXS"] and cases.samples.sample_type in ["primary blood derived cancer - peripheral blood", "solid tissue normal"]
 ```
@@ -68,7 +68,7 @@ Program needs manifest and metadata files as arguments. It creates new_manifest.
 
 More optional commands can be found [here](https://docs.gdc.cancer.gov/Data_Transfer_Tool/PDF/Data_Transfer_Tool_UG.pdf) from page 16. 
 
-## 8. Aftermath
+## 9. Aftermath
 Now you should have all the important files in the given destination directory (or current directory). Every file has its own directory containing the bam file, bai file and log files.
 
 
