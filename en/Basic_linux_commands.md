@@ -139,7 +139,7 @@ ls -l | grep '^.r'
 
 Or if you want all edited in May
 ```bash
-ls -l | grep '\sMar\s'
+ls -l | grep '\sMay\s'
 ```
 * \s = space
 
