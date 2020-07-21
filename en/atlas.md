@@ -61,7 +61,7 @@ scp -r /pathonyourcomputer username@atlas.fimm.fi:/pathincluster
 From the cluster to your computer:
 
 ```bash
-scp -r username@atlas.fimm.fi:/pathincluster/pathonyourcomputer
+scp -r username@atlas.fimm.fi:/pathincluster /pathonyourcomputer
 ```
 
 * r = recursive, will copy the whole directory
