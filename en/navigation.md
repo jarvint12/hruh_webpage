@@ -13,6 +13,8 @@
 
 [How to git](git.md)
 
+[How to TCGA](TCGA_data.md)
+
 [How to contribute](contribute.md)
 
 [gimmick:theme](bootstrap)
