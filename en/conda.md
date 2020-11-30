@@ -2,9 +2,9 @@
 
 ## Conda environment - Why?
 
-> TL; DR Python works best with virtual environments. Anaconda (or Conda) enables easier and smarter building of virtual environments than “virtualenv”.
+*TL; DR*: Python works best with virtual environments. Anaconda (or Conda) enables easier and smarter building of virtual environments than “virtualenv”.
 
-Long explanation “Anaconda” is a free and open-source distribution of the Python and R programming languages for scientific computing, that aims to simplify package management and deployment. Thus, Anaconda builds a virtual environment, where your R and Python packages work well together each time the user installs or updates packages. It is also easy to copy entire virtual environments to colleagues or to another computer or computational enviroment.
+*Long explanation*: “Anaconda” is a free and open-source distribution of the Python and R programming languages for scientific computing, that aims to simplify package management and deployment. Thus, Anaconda builds a virtual environment, where your R and Python packages work well together each time the user installs or updates packages. It is also easy to copy entire virtual environments to colleagues or to another computer or computational enviroment.
 
 Another virtual environment manager, “virtualenv” (a.k.a. pip package manager), is popular among Python users but has important caveats. The big difference between Conda and the pip package manager is in how package dependencies are managed, which is a significant challenge for Python data science and the reason Conda exists. Pip installs all Python package dependencies required, whether or not those conflict with other packages you installed previously. So your working installation of, for example, Google Tensorflow, can suddenly stop working when you pip install a different package that needs a different version of the numpy library. More insidiously, everything might still appear to work but now you get different results from your data science, or you are unable to reproduce the same results elsewhere because you didn’t pip install in the same order.
 
@@ -13,7 +13,9 @@ Conda analyzes your current environment, everything you have installed, any vers
 If you like to work with more graphical softwares, for example you prefer to work with RStudio rather than R, you can also download Anaconda Navigator in your computer. Anaconda Navigator is a desktop graphical user interface (GUI) included in Anaconda distribution that allows users to launch applications and manage conda packages, environments and channels without using command-line commands.
 
 ## For who?
-If you use R and have problems with meeting package requirements. If you use R and need packages such as tensorflow or reticulate, which rely on Python. If you use Python.
+* If you use R and have problems with meeting package requirements
+* If you use R and need packages such as tensorflow or reticulate, which rely on Python
+* If you use Python
 
 ## How?
 
@@ -136,13 +138,17 @@ Then what?
 
 ## Then what?
 
-```
-### Now you are ready to go!
+Now you are ready to go!
 
-## If you need other packages, download them from https://anaconda.org/ by looking up a code snipet
-## For example, the code for R tidyverse is
+If you need other packages, download them from https://anaconda.org/ by looking up a code snipet
+For example, the code for R tidyverse is
+```
 conda install -c r r-tidyverse
-## Some packages do not get downloaded with conda. These will have to be downloaded the old way by opening R and running "install.packages" in R
+```
+
+Some packages do not get downloaded with conda. These will have to be downloaded the old way by opening R and running "install.packages" in R
+
+```
 
 # Open R
 R
