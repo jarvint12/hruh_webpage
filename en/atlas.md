@@ -1,9 +1,23 @@
 # FIMM cluster instructions for HRUH
+
 Basic Linux knowledge is needed to use the cluster.
 
-isn't this the greatest webpage you've ever seeen
-
 ## Login
+
+FIMM clusters frontend loggin and address
+	
+FIMM cluster’s host name is atlas.genome.helsinki.fi  and it can be researched using ssh. Files can be transferred into the system and out from the system through scp. For windows users, a tool called putty (https://www.putty.org/) can be used to access the server and a tool called winSCP (https://winscp.net/eng/download.php) can be used to transfer files. In OSX, one can use terminal for loggin and file transfer. 
+![image](https://user-images.githubusercontent.com/28605575/119094910-4a18fe00-ba1a-11eb-966f-500e8dc5b640.png)
+
+At the first login, set up necessary environmental variables
+
+1)	Allow email forwarding by creating a file called .forward. Open the newly created file, type the letter Y and save the file. 	
+2)	Set up local location for R packages. Open or creat a file called .bash_profile and add or type a following row:
+
+```export R_LIBS=/homes/<YOUR_USERID>/R```
+
+3)	Set up other environmental variables 
+![image](https://user-images.githubusercontent.com/28605575/119094935-52713900-ba1a-11eb-81c2-46c5f5fef014.png)
 
 
 If you forget your password, new one can be set in userportal.giu.fi.
