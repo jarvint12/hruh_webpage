@@ -7,7 +7,6 @@ Basic Linux knowledge is needed to use the cluster.
 FIMM clusters frontend loggin and address
 	
 FIMM cluster’s host name is atlas.genome.helsinki.fi  and it can be researched using ssh. Files can be transferred into the system and out from the system through scp. For windows users, a tool called putty (https://www.putty.org/) can be used to access the server and a tool called winSCP (https://winscp.net/eng/download.php) can be used to transfer files. In OSX, one can use terminal for loggin and file transfer. 
-![image](https://user-images.githubusercontent.com/28605575/119094910-4a18fe00-ba1a-11eb-966f-500e8dc5b640.png)
 
 At the first login, set up necessary environmental variables
 
@@ -17,7 +16,6 @@ At the first login, set up necessary environmental variables
 ```export R_LIBS=/homes/<YOUR_USERID>/R```
 
 3)	Set up other environmental variables 
-![image](https://user-images.githubusercontent.com/28605575/119094935-52713900-ba1a-11eb-81c2-46c5f5fef014.png)
 
 
 If you forget your password, new one can be set in userportal.giu.fi.
@@ -26,9 +24,34 @@ If you forget your password, new one can be set in userportal.giu.fi.
 ssh username@atlas.fimm.fi
 ```
 
+## Performing computational analyses at FIMM atlas
+
+FIMM atlas is an HPC cluster that consists of many separate servers. The atlas itself is a frontend node and should only be used for light computational tasks like file listing, file copying, writing scripts etc. All heavy tasks requiring substantial processor or memory resources should be carried out at backend nodes. Computational tasks should be put to the backend nodes using sun grid engine (SGE) workload manager commands. The basic elements of SGE include: job (some task you wish to carry out), node (a physical server that performs the job), slot (a node can only process this many jobs simultaneously), job queue (a collection of nodes). Upon specific request, permission to form direct ssh connections to backend nodes can be given. However, avoid this strategy, as it makes demographic distributions of resources impossible.
+
+Typical commands 
+List all available queues: qstat -g c
+List all available nodes: qstat -f
+List all jobs of all users: qstat -u "*"
+List all jobs assigned to a particular queue: qstat -q "seq_hugemem2.q" -u "*"
+Delete job: qdel <job-ID>
+Full list of commands: http://gridscheduler.sourceforge.net/htmlman/manuals.html
+Alternative job submission: qsub
+
+List your jobs: qstat
+
+In the listing example below, the first column has the job-ID of your job. The fifth column has the job status (r=running, qw=queueing, anything else=error).  
+
+Submit job:	grun.py -n "mylog" -L mylogfolder -q all.q -c "./job_file.sh" 
+
+In job submission command, -n = prefix to be added STDERR (.ER), STDOUT (.OU), and SGE job submission file (.job), -L = folder for ER, OU, job files (optional), -q queue to use, -c = command and/or script file to run. If a shell script (e.g. test.sh) is given as a command, make sure that it is executable (chmod +x test.sh).
+
+While using other than seq_hugemem2.q queue, memory and core parameters can be defined. If you don’t specify memory or core parameters when submitting your job to these queues, the defaults are used to reserve resources.
+![image](https://user-images.githubusercontent.com/28605575/119095206-a8de7780-ba1a-11eb-86c4-c6b9f12a99e1.png)
+
+	
 ## Project directories
 
-Don’t use your personal directory as it will fill up quickly.
+Don’t use your personal directory as it will fill up quickly. See directory links for more information. 
 Common project directory for NGS data analyses:
 
 ```bash
