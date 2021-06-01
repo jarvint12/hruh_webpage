@@ -1,0 +1,11 @@
+Original manual can be found from /csc/mustjoki/gatk/cml/epi_ski_191120/README
+1. Create a FASTQ folder, which contains all the FASTQ files
+1. Create a configuration file with /apps/perl/bin/perl /csc/mustjoki2/bioinformatics/huslab/FIMM/gatk_pipeline/source/gatk_samplesheet_generator.pm --input /fastq/dir/ --output  /result/dir/ --mode tumor --ref /csc/mustjoki2/bioinformatics/gatk/reference_data/GRCh38/GRCh38.p12/ >outputfile.txt
+1. Create directory for log files
+1. Go do that log directory
+1. Create a output directory, which you have determined in configuration file creation command
+1. Run the pipeline with grun.py -n rna_cont_tcga -q seq_hugemem2.q -c "/apps/perl/bin/perl /csc/mustjoki2/bioinformatics/huslab/FIMM/gatk_pipeline/source/gatk_runner.pm --file /path/to/configuration_file.txt --sgi --batch --python_config WES --execute"
+1. Result can be found from folder /csc/mustjoki2/gatk_archive? Or in the directory specified in configuration file?
+1. Check the results with /apps/perl/bin/perl /csc/mustjoki2/bioinformatics/huslab/FIMM/gatk_pipeline/source/gatk_check.pm --input epi_ski_191120_old_samples.txt --output /csc/mustjoki2/gatk_archive/
+1. Rerun if errors has been emerged. Possibly, you need to remove the folder created in the last step, if the program has not died smoothly and you cannot find the failed file.
+
